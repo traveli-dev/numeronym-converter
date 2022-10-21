@@ -1,13 +1,22 @@
-import { useState } from 'react'
 import { splitSentence } from '@/utils/splitSentence'
-import { useIO } from '@/hooks/useIO'
 
-export const convertSentence = () => {
-  // 入力と出力の定義
-  const { input, setOutput } = useIO()
-
+export const convertSentence = (input: string) => {
   const arr = splitSentence(input)
 
-  // arrをごにょごにょして最終これを返す
-  setOutput('are you a b6l fun?')
+  return getConvertedWords(arr).join(' ')
+}
+
+/* 単語をヌメロニム化 */
+const getConvertedWords = (words: string[]) => {
+  const convertedWords: string[] = []
+  words.forEach((word) => {
+    if (word.length < 4) {
+      convertedWords.push(word)
+      return
+    }
+    convertedWords.push(
+      word.charAt(0) + (word.length - 2) + word.charAt(word.length - 1)
+    )
+  })
+  return convertedWords
 }
